@@ -79,11 +79,10 @@ class User < ApplicationRecord
   end
   
   # 試作feedの定義
-  # 完全な実装は次章の「ユーザーをフォローする」を参照
   def feed
-    Micropost.where("user_id = ?", id)
+    Micropost.where("user_id IN (?) OR user_id = ?", following_ids, id)
   end
-  
+
   # ユーザーをフォローする
   def follow(other_user)
     following << other_user
